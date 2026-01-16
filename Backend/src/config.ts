@@ -1,0 +1,1 @@
+export const JWT_User = process.env.JWT_User;
