@@ -28,3 +28,5 @@ const purchaseSchema=new Schema({
 export const userModel=model("User",userSchema)
 export const courseModel=model("Courses",CourseSchema)
 export const purchaseModel=model("Purchases",purchaseSchema)
+
+
