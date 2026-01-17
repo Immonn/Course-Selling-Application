@@ -2,12 +2,14 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import {authRoute} from "./routes/auth"
+import { adminRouter } from "./routes/admin";
 import mongoose from "mongoose";
 
 const app = express();
 app.use(express.json())
 
 app.use("/auth",authRoute)
+app.use("/admin",adminRouter)
 
 
 async function main() {

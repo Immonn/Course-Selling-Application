@@ -1,24 +1,33 @@
-import jwt from "jsonwebtoken";
-import { JWT_User } from "./config";
-import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken"
+import { JWT_User } from "./config"
+import { Request,Response,NextFunction } from "express"
+export function middleware(req:Request,res:Response,next:NextFunction){
+    const token:any=req.headers.token
+    if (!JWT_User){
+        return res.send("Provide JWT")
+    }
+    if (!token){
+        return res.send("Token not found")
+    }
+    const decode=jwt.verify(token,JWT_User)
+    if (!decode){
+        return res.send("Invalid token")
+    }
+    if (decode){
+        //@ts-ignore
+        req.userId=decode.id
+        //@ts-ignore
+        req.role=decode.role
+        next()
+    }else{
+        res.send("Please Signed in")
+    }
 
-export function middleware(req: Request, res: Response, next: NextFunction) {
-    const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(" ")[1];
-    if (!token) {
-        return res.status(401).send("Token not provided");
+}
+export function getAdmin(req: Request, res: Response, next: NextFunction) {
+    // @ts-ignore
+    if (req.role !== "admin") {
+        return res.status(402).send("Access denied: Admins only");
     }
-    if (!JWT_User) {
-        return res.status(500).send("JWT secret not configured");
-    }
-    try {
-        const decode = jwt.verify(token, JWT_User) as { id: string, role: string };
-        // @ts-ignore
-        req.userId = decode.id;
-        // @ts-ignore
-        req.role = decode.role;
-        next();
-    } catch (err) {
-        return res.status(401).send("Invalid token");
-    }
+    next();
 }
