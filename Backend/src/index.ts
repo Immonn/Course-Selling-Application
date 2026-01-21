@@ -4,6 +4,7 @@ import express from "express";
 import {authRoute} from "./routes/auth"
 import { adminRouter } from "./routes/admin";
 import { userRouter } from "./routes/user";
+import { courseRouter } from "./routes/courses";
 import mongoose from "mongoose";
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.json())
 app.use("/auth",authRoute)
 app.use("/admin",adminRouter)
 app.use("/user",userRouter)
+app.use("/course",courseRouter)
 
 
 async function main() {
