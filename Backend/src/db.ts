@@ -21,8 +21,11 @@ const CourseSchema=new Schema({
 
 
 const purchaseSchema=new Schema({
-    userId:Types.ObjectId,
-    courseID:Types.ObjectId
+    userId: Types.ObjectId,
+    courseID: {
+        type: Types.ObjectId,
+        ref: "Courses"
+    }
 })
 
 export const userModel=model("User",userSchema)
