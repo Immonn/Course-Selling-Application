@@ -31,3 +31,10 @@ export function getAdmin(req: Request, res: Response, next: NextFunction) {
     }
     next();
 }
+
+export function getUser(req: Request, res: Response, next: NextFunction){
+    if (req.role!=="user"){
+        return res.status(402).send("Access denied: Users only");
+    }
+    next();
+}
