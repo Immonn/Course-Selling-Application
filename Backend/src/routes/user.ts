@@ -3,8 +3,8 @@ export const userRouter=Router()
 import { purchaseModel } from "../db";
 import { getUser,middleware } from "../middleware";
 
-userRouter.use(getUser)
 userRouter.use(middleware)
+userRouter.use(getUser)
 
 userRouter.get("/purchases", async (req, res) => {
     const userId = req.userId;

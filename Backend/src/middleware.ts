@@ -33,7 +33,7 @@ export function getAdmin(req: Request, res: Response, next: NextFunction) {
 }
 
 export function getUser(req: Request, res: Response, next: NextFunction){
-    if (req.role!=="user"){
+    if (req.role !== "user" && req.role !== "admin") {
         return res.status(402).send("Access denied: Users only");
     }
     next();
